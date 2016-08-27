@@ -38,3 +38,19 @@
 .centros_de_atencion_primaria {
 	fill: #DFE746;
 }
+
+.chk_hospitales_container {
+	background-color: #FFDDEE;
+}
+
+.chk_clinicas_privadas_container {
+	background-color: #CACDFF;
+}
+
+.chk_centros_medicos_barriales_container {
+	background-color: #A08379;
+}
+
+.chk_centros_de_atencion_primaria_container {
+	background-color: #DFE746;
+}
