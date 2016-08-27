@@ -1,0 +1,40 @@
+.polygons {
+	fill: #fff;
+	stroke: #000;
+	fill-opacity: 0.9;
+}
+
+.polygons_container :hover {
+	fill: #f00;
+}
+
+.barrios {
+	fill: #fff;
+	stroke: #000;
+	opacity: 1;
+}
+
+.lugares_pt {
+	fill: #000;
+	stroke: #fff;
+}
+
+.lugares_pt :hover {
+	fill: #fff;
+}
+
+.hospital {
+	fill: #FFDDEE;
+}
+
+.clinica_privada {
+	fill: #CACDFF;
+}
+
+.centros_medicos_barriales {
+	fill: #A08379;
+}
+
+.centros_de_atencion_primaria {
+	fill: #DFE746;
+}
