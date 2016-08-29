@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="iso-8859-1">
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<script src="d3.v4.js"></script>
+	<script src="scale.js"></script>
+	<script src="bordes_barrios_arrays.js"></script>
+	<script src="datos_barrios.js"></script>
+</head>
+<body>
+	<div style="display: flex">
+		<svg width="700" height="500"></svg>
+		<div>
+			<h1>Densidad (hab/km2)</h1>
+			<div id="escala">
+				<!-- Aca va la escala -->
+			</div>
+		</div>
+	</div>
+	<script>
+
+	//var DATOS_A_MOSTRAR = DATOS_INFO_POBLACION;
+	var DATOS_A_MOSTRAR = DATOS_INFO_DENSIDAD;
+
+	
+	var svg = d3.select("svg").on("touchmove mousemove", moved),
+	width = +svg.attr("width"),
+	height = +svg.attr("height");
+
+
+	var descripcionLugar = function(d, idx){
+		var datos = datos_barrios[idx];
+		return datos[DATOS_INFO_NOMBRE] + ' - Poblacion:' + datos[DATOS_INFO_POBLACION] + ' - Densidad:' + datos[DATOS_INFO_DENSIDAD];
+	};
+	
+	var escala = d3.scaleLinear().domain([0,1000])
+			.interpolate(d3.interpolateHcl)
+			.range([d3.rgb("#000000"), d3.rgb('#FFFFFF')]);
+			//.range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+	var color_escala = function(v) {
+		return escala(1000*v);
+	}
+
+	// Aplicar la escala para que entre la capital entera
+	var curScale = new Scale([].concat.apply([], bordes_barrios), 0.8);
+	var bordes_barrios_adaptados = curScale.adaptAllScale(bordes_barrios);
+	var max_poblacion = datos_barrios.map(function(e){return e[DATOS_A_MOSTRAR];}).reduce(function(a, b){ return Math.max(a, b);});
+
+	var barrios = svg.append("g")
+		.attr("class", "barrios")
+		.selectAll("path")
+		.data(bordes_barrios_adaptados)
+		.enter().append("path")
+		.attr('title', descripcionLugar)
+		.attr('fill', function(e, idx){
+			var datos = datos_barrios[idx];
+			var escala = datos[DATOS_A_MOSTRAR] / max_poblacion;
+			return color_escala(escala);
+		})
+		.call(redrawBarrios);
+
+
+
+	function moved() {
+		//lugaresCmp[0] = d3.mouse(this);
+		//redraw();
+	}
+
+	function redraw() {
+	}
+
+	function redrawBarrios(polygon) {
+		polygon
+			.attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null; });
+	}
+	
+	function armarEscala() {
+		var cantidad = 7;
+		var a = [];
+		for (var i = cantidad; i >= 0; i--) {a.push(i)};
+		
+		d3.select("#escala")
+			.selectAll("span")
+			.data(a)
+			.enter()
+			.append("span")
+			.attr('class', 'escala-container');
+		
+		d3.selectAll(".escala-container")
+			.append("div")
+			.attr('class', 'escala-box')
+			.style('background-color', function(v){
+				return escala(1000*v/cantidad);
+			});
+		d3.selectAll(".escala-container")
+			.append("div")
+			.attr('class', 'escala-texto')
+			.text(function(v){
+				return Math.floor(v * max_poblacion/ cantidad);
+			});
+	}
+	
+	armarEscala();
+
+	</script>
+</body>
+</html>

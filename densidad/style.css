@@ -1,0 +1,22 @@
+.barrios {
+	fill: #fff;
+	stroke: #000;
+	opacity: 1;
+}
+
+h1 {
+	font-size: 20px;
+}
+
+.escala-container {
+	display: flex;
+}
+.escala-texto {
+	margin-left: 5px;
+	margin-top: 4px;
+}
+.escala-box {
+	width: 32px;
+	height: 24px;
+	border: 1px solid #000000;
+}
