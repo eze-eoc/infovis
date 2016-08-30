@@ -34,8 +34,8 @@
 	};
 	
 	var escala = d3.scaleLinear().domain([0,1000])
-			.interpolate(d3.interpolateHcl)
-			.range([d3.rgb("#000000"), d3.rgb('#FFFFFF')]);
+			.interpolate(d3.interpolateLab)//interpolateHcl
+			.range([d3.rgb("#FFFFFF"), d3.rgb('#CC0000')]);
 			//.range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
 	var color_escala = function(v) {
 		return escala(1000*v);
